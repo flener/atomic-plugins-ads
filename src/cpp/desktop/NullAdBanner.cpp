@@ -10,11 +10,24 @@ NullAdBanner::NullAdBanner(std::string adunit, AdBannerSize size)
 {
 	mAdUnit = adunit;
 	mSize = size;
+	mLoadSucess = false;
 }
 
 void NullAdBanner::show()
 {
-	std::cout << "NullAdBanner::show()" << std::endl;
+	std::cout << "NullAdBanner(adunit="<< mAdUnit << "::show()" << std::endl;
+
+	static bool clicked = true;
+
+	if(mListener){
+		mListener->onExpanded(this);
+		if(clicked){
+			mListener->onClicked(this);
+		}
+		mListener->onCollapsed(this);
+	}
+
+	clicked = !clicked;
 }
 
 void NullAdBanner::hide()
@@ -36,34 +49,20 @@ int32_t NullAdBanner::getHeight() const
 
 void NullAdBanner::load()
 {
-	std::cout << "NullAdBanner::getLoad()" << std::endl;
+	std::cout << "NullAdBanner(adunit="<< mAdUnit << "::load()" << std::endl;
 
-	static int count = 0;
+	mLoadSucess=!mLoadSucess;
 
 	if(!mListener){
 		return;
 	}
 
-	switch(count){
-	case 0:
+	if(mLoadSucess){
 		mListener->onLoaded(this);
-		break;
-	case 1:
+	}else{
 		mListener->onFailed(this, -1, "Fake error message");
-		break;
-	case 2:
-		mListener->onClicked(this);
-		break;
-	case 3:
-		mListener->onExpanded(this);
-		break;
-	case 4:
-		mListener->onCollapsed(this);
-		break;
 	}
 
-	count++;
-	count%=5;
 }
 
 void NullAdBanner::setListener(AdBannerListener *listener)

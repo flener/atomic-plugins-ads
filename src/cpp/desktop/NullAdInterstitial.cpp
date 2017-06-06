@@ -9,43 +9,43 @@ NullAdInterstitial::NullAdInterstitial(std::string adunit)
 {
 	mAdUnit = adunit;
 	mListener = nullptr;
+	mLoadSucess = false;
 }
 
 void NullAdInterstitial::show()
 {
-	std::cout << "NullAdInterstitial::show()" << std::endl;
+	std::cout << "NullAdInterstitial(adunit="<< mAdUnit << "::show()" << std::endl;
+
+
+	static bool clicked = true;
+
+	if(!mListener){
+		mListener->onShown(this);
+		if(clicked){
+			mListener->onClicked(this);
+		}
+		mListener->onHidden(this);
+	}
+
+	clicked = !clicked;
 }
 
 void NullAdInterstitial::load()
 {
-	std::cout << "NullAdInterstitial::load()" << std::endl;
+	std::cout << "NullAdInterstitial(adunit="<< mAdUnit << "::load()" << std::endl;
 
-	static int count = 0;
+	mLoadSucess=!mLoadSucess;
 
 	if(!mListener){
 		return;
 	}
 
-	switch(count){
-	case 0:
+	if(mLoadSucess){
 		mListener->onLoaded(this);
-		break;
-	case 1:
+	}else{
 		mListener->onFailed(this, -1, "Fake error message");
-		break;
-	case 2:
-		mListener->onClicked(this);
-		break;
-	case 3:
-		mListener->onShown(this);
-		break;
-	case 4:
-		mListener->onHidden(this);
-		break;
 	}
 
-	count++;
-	count%=5;
 }
 
 void NullAdInterstitial::setListener(AdInterstitialListener *listener)

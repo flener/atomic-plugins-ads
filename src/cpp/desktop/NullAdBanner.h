@@ -25,6 +25,7 @@ protected:
 	AdBannerListener * mListener;
 	std::string mAdUnit;
 	AdBannerSize mSize;
+	bool mLoadSucess;
 };
 
 }

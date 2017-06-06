@@ -19,6 +19,7 @@ public:
 protected:
 	AdInterstitialListener *mListener;
 	std::string mAdUnit;
+	bool mLoadSucess;
 };
 
 
