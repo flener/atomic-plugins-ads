@@ -12,10 +12,10 @@ apply plugin: 'maven'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 19
         targetSdkVersion 21
     }
 

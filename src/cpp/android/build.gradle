@@ -15,10 +15,10 @@ apply plugin: 'maven'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 19
         targetSdkVersion 21
     }
 
@@ -34,7 +34,7 @@ android {
 
 // call regular ndk-build script from app directory
 task ndkBuild(type: Exec) {
-    def ndkDir = project.plugins.findPlugin('com.android.library').getNdkFolder()
+    def ndkDir = project.android.ndkDirectory
 
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         commandLine "$ndkDir/ndk-build.cmd", '-C', file('jni').absolutePath
