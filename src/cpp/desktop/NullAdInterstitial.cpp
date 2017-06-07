@@ -19,7 +19,7 @@ void NullAdInterstitial::show()
 
 	static bool clicked = true;
 
-	if(!mListener){
+	if(mListener){
 		mListener->onShown(this);
 		if(clicked){
 			mListener->onClicked(this);
