@@ -14,7 +14,7 @@ NullAdInterstitial::NullAdInterstitial(std::string adunit)
 
 void NullAdInterstitial::show()
 {
-	std::cout << "NullAdInterstitial(adunit="<< mAdUnit << "::show()" << std::endl;
+	std::cout << "NullAdInterstitial(adunit="<< mAdUnit << ")::show()" << std::endl;
 
 
 	static bool clicked = true;
@@ -32,7 +32,7 @@ void NullAdInterstitial::show()
 
 void NullAdInterstitial::load()
 {
-	std::cout << "NullAdInterstitial(adunit="<< mAdUnit << "::load()" << std::endl;
+	std::cout << "NullAdInterstitial(adunit="<< mAdUnit << ")::load()" << std::endl;
 
 	mLoadSucess=!mLoadSucess;
 
@@ -50,7 +50,7 @@ void NullAdInterstitial::load()
 
 void NullAdInterstitial::setListener(AdInterstitialListener *listener)
 {
-	std::cout << "NullAdInterstitial::setListener(listener=" << listener << std::endl;
+	std::cout << "NullAdInterstitial::setListener(listener=" << listener << ")" <<std::endl;
 	mListener = listener;
 }
 

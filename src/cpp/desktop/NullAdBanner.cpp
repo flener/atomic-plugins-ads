@@ -49,7 +49,7 @@ int32_t NullAdBanner::getHeight() const
 
 void NullAdBanner::load()
 {
-	std::cout << "NullAdBanner(adunit="<< mAdUnit << "::load()" << std::endl;
+	std::cout << "NullAdBanner(adunit="<< mAdUnit << ")::load()" << std::endl;
 
 	mLoadSucess=!mLoadSucess;
 

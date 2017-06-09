@@ -27,7 +27,7 @@ AdBanner *NullAdService::createBanner(const char *adunit, AdBannerSize size)
 		adunit = mSettings.banner.c_str();
 	}
 
-	std::cout << "Creating NullAdBanner : adunit= " << adunit << " AdBannerSize: " << toString(size);
+	std::cout << "Creating NullAdBanner : adunit= " << adunit << " AdBannerSize: " << toString(size) << std::endl;
 
 	return new NullAdBanner(adunit,size);
 }
@@ -39,7 +39,7 @@ AdInterstitial *NullAdService::createInterstitial(const char *adunit)
 		adunit = mSettings.banner.c_str();
 	}
 
-	std::cout << "Creating NullAdInterstitial : adunit= " << adunit;
+	std::cout << "Creating NullAdInterstitial : adunit= " << adunit << std::endl;
 
 	return new NullAdInterstitial(adunit);
 }
