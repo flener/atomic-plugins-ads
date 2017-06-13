@@ -547,7 +547,8 @@
 						CreatedOnToolsVersion = 6.1.1;
 					};
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = 4W4992Q3W8;
+						DevelopmentTeam = 72ZUR73VSD;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -933,7 +934,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				DEVELOPMENT_TEAM = 72ZUR73VSD;
+				ENABLE_BITCODE = NO;
 				EXTERNAL = "${PROJECT_DIR}/../../../src/atomic/ios/mopub/external";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -952,7 +956,7 @@
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LIBRARY_SEARCH_PATHS = (
 					"/Users/mortimer/Projects/plugins-ads/src/atomic/ios/admob/external",
 					"/Users/mortimer/Projects/plugins-ads/src/atomic/ios/mopub/external/adapters/admob",
@@ -971,7 +975,10 @@
 					"${PROJECT_DIR}/../../../src/cordova/ios/mopub/millennial/src/deps/libMillennialMediaAdapter.a",
 					"${PROJECT_DIR}/../../../src/cordova/ios/mopub/millennial/src/deps/libMillennialMedia.a",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.cocos2dx.testadd;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
 				VALID_ARCHS = "arm64 armv7";
@@ -984,7 +991,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				DEVELOPMENT_TEAM = 72ZUR73VSD;
+				ENABLE_BITCODE = NO;
 				EXTERNAL = "${PROJECT_DIR}/../../../src/atomic/ios/mopub/external";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1002,7 +1012,7 @@
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LIBRARY_SEARCH_PATHS = (
 					"/Users/mortimer/Projects/plugins-ads/src/atomic/ios/admob/external",
 					"/Users/mortimer/Projects/plugins-ads/src/atomic/ios/mopub/external/adapters/admob",
@@ -1021,7 +1031,10 @@
 					"${PROJECT_DIR}/../../../src/cordova/ios/mopub/millennial/src/deps/libMillennialMediaAdapter.a",
 					"${PROJECT_DIR}/../../../src/cordova/ios/mopub/millennial/src/deps/libMillennialMedia.a",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.cocos2dx.testadd;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
 				VALID_ARCHS = "arm64 armv7";
