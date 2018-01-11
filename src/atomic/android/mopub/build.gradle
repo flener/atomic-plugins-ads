@@ -29,7 +29,10 @@ android {
 
 dependencies {
     compile project(':ads-common')
-    compile fileTree(dir: 'external/mopub', include: ['*.jar', '*.aar'])
+    //compile fileTree(dir: 'external/mopub', include: ['*.jar', '*.aar'])
+    compile('com.mopub:mopub-sdk:4.19.0@aar') {
+        transitive = true
+    }
 
 }
 
