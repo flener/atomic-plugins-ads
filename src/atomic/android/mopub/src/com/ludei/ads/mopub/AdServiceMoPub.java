@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ludei.ads.AdBanner;
 import com.ludei.ads.AdInterstitial;
+import com.ludei.ads.AdRewardedVideo;
 import com.ludei.ads.AdService;
 
 public class AdServiceMoPub implements AdService {
@@ -50,6 +51,18 @@ public class AdServiceMoPub implements AdService {
             throw new RuntimeException("Empty AdUnit");
         }
         return new AdInterstitialMoPub(ctx, adunit);
+    }
+
+    @Override
+    public AdRewardedVideo createRewardedVideo(Context ctx) {
+        // Unsupported
+        return null;
+    }
+
+    @Override
+    public AdRewardedVideo createRewardedVideo(Context ctx, String adunit) {
+        // Unsupported
+        return null;
     }
 
 

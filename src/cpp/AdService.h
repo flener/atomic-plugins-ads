@@ -2,6 +2,7 @@
 
 #include "AdBanner.h"
 #include "AdInterstitial.h"
+#include "AdRewardedVideo.h"
 
 namespace ludei { namespace ads {
     
@@ -47,6 +48,8 @@ namespace ludei { namespace ads {
          * Optional adunit. If empty, the 'interstitial' property is used on tablets.
          */
         std::string interstitialTablet;
+
+		std::string rewardedVideo;
     };
     
     /**
@@ -93,6 +96,8 @@ namespace ludei { namespace ads {
          * @param adunit The interstitial adunit. 
          */
         virtual AdInterstitial * createInterstitial(const char * adunit = 0) = 0;
+
+        virtual AdRewardedVideo * createRewardedVideo(const char * adunit = 0) = 0;
     };
     
 } }

@@ -29,7 +29,6 @@ android {
 
 dependencies {
     compile project(':ads-common')
-    compile 'com.google.android.gms:play-services-ads:10.2.6' //admob
-
+    //compile 'com.google.android.gms:play-services-ads:10.2.6' //admob
+    compile 'com.google.android.gms:play-services-ads:11.8.0' //admob farruda
 }
-

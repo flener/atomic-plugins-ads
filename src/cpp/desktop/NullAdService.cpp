@@ -2,6 +2,7 @@
 #include "NullAdUtils.h"
 #include "NullAdBanner.h"
 #include "NullAdInterstitial.h"
+#include "NullAdRewardedVideo.h"
 
 namespace ludei{
 namespace ads{
@@ -36,12 +37,24 @@ AdInterstitial *NullAdService::createInterstitial(const char *adunit)
 {
 	if(adunit==nullptr){
 		std::cout  << "Null AdUnit, setting default : " << mSettings.interstitial;
-		adunit = mSettings.banner.c_str();
+		adunit = mSettings.interstitial.c_str();
 	}
 
 	std::cout << "Creating NullAdInterstitial : adunit= " << adunit;
 
 	return new NullAdInterstitial(adunit);
+}
+
+AdRewardedVideo *NullAdService::createRewardedVideo(const char *adunit)
+{
+	if(adunit==nullptr){
+		std::cout  << "Null AdUnit, setting default : " << mSettings.rewardedVideo;
+		adunit = mSettings.rewardedVideo.c_str();
+	}
+
+	std::cout << "Creating NullAdRewardedVideo : adunit= " << adunit;
+
+	return new NullAdRewardedVideo(adunit);
 }
 
 }

@@ -16,6 +16,8 @@ add_library(null_atomic_plugin_ads
     NullAdBanner.h
     NullAdInterstitial.h
     NullAdUtils.h
+    NullAdRewardedVideo.h
+    NullAdRewardedVideo.cpp
     ../AdService.h
     ../AdBanner.h
     ../AdInterstitial.h

@@ -16,10 +16,12 @@ public:
 	void configure(const AdServiceSettings &settings) override;
 	AdBanner *createBanner(const char *adunit, AdBannerSize size) override;
 	AdInterstitial *createInterstitial(const char *adunit) override;
+	AdRewardedVideo *createRewardedVideo(const char *adunit) override;
 
 protected:
 	std::string mServiceName;
 	AdServiceSettings mSettings;
+
 };
 
 }

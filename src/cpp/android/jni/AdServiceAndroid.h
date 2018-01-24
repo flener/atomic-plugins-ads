@@ -5,11 +5,11 @@ using namespace safejni;
 
 
 namespace ludei { namespace ads {
-    
+
     /*
      * Bridge between C++ API and atomic android implementation
      */
-    
+
     class AdServiceAndroid: public AdService {
 
     public:
@@ -18,10 +18,11 @@ namespace ludei { namespace ads {
         void configure(const AdServiceSettings & settings) override;
         AdBanner * createBanner(const char * adunit = 0, AdBannerSize size = AdBannerSize::SMART_SIZE) override;
         AdInterstitial * createInterstitial(const char * adunit = 0) override;
+        AdRewardedVideo* createRewardedVideo(const char * adunit = 0) override;
 
         SPJNIObject javaObject;
     };
-    
+
     class AdBannerAndroid: public AdBanner {
     public:
         AdBannerAndroid(SPJNIObject javaService);
@@ -34,14 +35,14 @@ namespace ludei { namespace ads {
         void setListener(AdBannerListener * listener) override;
         void setLayout(AdBannerLayout layout) override;
         void setPosition(float x, float y) override;
-        
+
         void layoutBanner();
         AdBannerListener * listener;
         SPJNIObject javaObject;
         int32_t width;
         int32_t height;
     };
-    
+
     class AdInterstitialAndroid: public AdInterstitial {
     public:
         AdInterstitialAndroid(SPJNIObject javaService);
@@ -54,4 +55,15 @@ namespace ludei { namespace ads {
         SPJNIObject javaObject;
     };
 
+	class AdRewardedVideoAndroid: public AdRewardedVideo {
+    public:
+        AdRewardedVideoAndroid(SPJNIObject javaService);
+        ~AdRewardedVideoAndroid();
+        void show() override;
+        void load() override;
+        void setListener(AdRewardedVideoListener * listener) override;
+
+        AdRewardedVideoListener * listener;
+        SPJNIObject javaObject;
+    };
 } }
