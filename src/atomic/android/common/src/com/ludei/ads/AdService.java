@@ -52,4 +52,8 @@ public interface AdService
      * @return An interstitial ad.
      */
     AdInterstitial createInterstitial(Context ctx, String adunit);
+
+    AdRewardedVideo createRewardedVideo(Context ctx);
+
+    AdRewardedVideo createRewardedVideo(Context ctx, String adunit);
 }

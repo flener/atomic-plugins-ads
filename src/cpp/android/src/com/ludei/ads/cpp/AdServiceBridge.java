@@ -11,13 +11,14 @@ import com.safejni.SafeJNI;
 
 import java.util.HashMap;
 
-public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.InterstitialListener, SafeJNI.ActivityLifeCycleListener {
+public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.InterstitialListener, AdRewardedVideo.RewardedVideoListener, SafeJNI.ActivityLifeCycleListener {
 
 
     private Activity _activity;
     private AdService _service;
     protected HashMap<Long, BannerData> _banners = new HashMap<>();
     protected HashMap<Long, AdInterstitial> _interstitials = new HashMap<>();
+    protected HashMap<Long, AdRewardedVideo> zRewardedVideos = new HashMap<>();
 
     public AdServiceBridge() {
 
@@ -36,6 +37,148 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
         }
 
         return true;
+    }
+
+    public void createRewardedVideo(final long rewardedVideoId, final String adunit) {
+
+        runOnThread(new Runnable() {
+            @Override
+            public void run() {
+                AdRewardedVideo rewardedVideo = _service.createRewardedVideo(_activity, adunit);
+                rewardedVideo.setListener(AdServiceBridge.this);
+                zRewardedVideos.put(rewardedVideoId, rewardedVideo);
+            }
+        });
+    }
+
+    public void showRewardedVideo(final long rewardedVideoId) {
+        runOnThread(new Runnable() {
+            @Override
+            public void run() {
+                AdRewardedVideo rewardedVideo = zRewardedVideos.get(rewardedVideoId);
+                if (rewardedVideo != null) {
+                    rewardedVideo.show();
+                }
+            }
+        });
+    }
+
+    public void loadRewardedVideo(final long rewardedVideoId) {
+        runOnThread(new Runnable() {
+            @Override
+            public void run() {
+                AdRewardedVideo rewardedVideo = zRewardedVideos.get(rewardedVideoId);
+                if (rewardedVideo != null) {
+                    rewardedVideo.loadAd();
+                }
+            }
+        });
+    }
+
+    public void releaseRewardedVideo(final long rewardedVideoId) {
+
+        runOnThread(new Runnable() {
+            @Override
+            public void run() {
+                AdRewardedVideo rewardedVideo = zRewardedVideos.get(rewardedVideoId);
+                if (rewardedVideo != null) {
+                    rewardedVideo.setListener(null);
+                    rewardedVideo.destroy();
+                    zRewardedVideos.remove(rewardedVideoId);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onAdLoaded(AdRewardedVideo adRewardedVideo) {
+        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+        if (rewardedVideoId == 0)
+            return;
+        dispatchNative(new Runnable() {
+            @Override
+            public void run() {
+                nativeRewardedVideoOnAdLoaded(rewardedVideoId);
+            }
+        });
+    }
+
+    @Override
+    public void onAdOpened(AdRewardedVideo adRewardedVideo) {
+        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+        if (rewardedVideoId == 0)
+            return;
+        dispatchNative(new Runnable() {
+            @Override
+            public void run() {
+                nativeRewardedVideoOnAdOpened(rewardedVideoId);
+            }
+        });
+    }
+
+    @Override
+    public void onAdStarted(AdRewardedVideo adRewardedVideo) {
+        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+        if (rewardedVideoId == 0)
+            return;
+        dispatchNative(new Runnable() {
+            @Override
+            public void run() {
+                nativeRewardedVideoOnAdStarted(rewardedVideoId);
+            }
+        });
+    }
+
+    @Override
+    public void onAdClosed(AdRewardedVideo adRewardedVideo) {
+        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+        if (rewardedVideoId == 0)
+            return;
+        dispatchNative(new Runnable() {
+            @Override
+            public void run() {
+                nativeRewardedVideoOnAdClosed(rewardedVideoId);
+            }
+        });
+    }
+
+    @Override
+    public void onRewarded(AdRewardedVideo adRewardedVideo, final AdRewardedVideo.RewardItem rewardItem) {
+        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+        if (rewardedVideoId == 0)
+            return;
+        dispatchNative(new Runnable() {
+            @Override
+            public void run() {
+                nativeRewardedVideoOnRewarded(rewardedVideoId, rewardItem.getType(), rewardItem.getAmount());
+            }
+        });
+    }
+
+    @Override
+    public void onAdLeftApplication(AdRewardedVideo adRewardedVideo) {
+        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+        if (rewardedVideoId == 0)
+            return;
+        dispatchNative(new Runnable() {
+            @Override
+            public void run() {
+                nativeRewardedVideoOnAdLeftApplication(rewardedVideoId);
+            }
+        });
+    }
+
+    @Override
+    public void onAdFailedToLoad(AdRewardedVideo adRewardedVideo, final int i) {
+        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+        if (rewardedVideoId == 0)
+            return;
+        dispatchNative(new Runnable() {
+            @Override
+            public void run() {
+                nativeRewardedVideoOnAdFailedToLoad(rewardedVideoId, i);
+            }
+        });
     }
 
     private enum BannerLayout {
@@ -266,6 +409,14 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     private static native void nativeInterstitialOnShown(long interstitialId);
     private static native void nativeInterstitialOnDismissed(long interstitialId);
 
+    private static native void nativeRewardedVideoOnAdLoaded(long adRewardedVideoId);
+    private static native void nativeRewardedVideoOnAdOpened(long adRewardedVideoId);
+    private static native void nativeRewardedVideoOnAdStarted(long adRewardedVideoId);
+    private static native void nativeRewardedVideoOnAdClosed(long adRewardedVideoId);
+    private static native void nativeRewardedVideoOnRewarded(long adRewardedVideoId, String rewardType, int rewardAmount);
+    private static native void nativeRewardedVideoOnAdLeftApplication(long adRewardedVideoId);
+    private static native void nativeRewardedVideoOnAdFailedToLoad(long adRewardedVideoId, int i);
+
     @Override
     public void onLoaded(AdBanner banner) {
         final long bannerId = findBannerId(banner);
@@ -442,6 +593,15 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     protected long findInterstitialId(AdInterstitial interstitial) {
         for (long key: _interstitials.keySet()) {
             if (_interstitials.get(key) == interstitial) {
+                return key;
+            }
+        }
+        return 0;
+    }
+
+    protected long findRewardedVideoId(AdRewardedVideo rewardedVideo) {
+        for (long key: zRewardedVideos.keySet()) {
+            if (zRewardedVideos.get(key) == rewardedVideo) {
                 return key;
             }
         }
