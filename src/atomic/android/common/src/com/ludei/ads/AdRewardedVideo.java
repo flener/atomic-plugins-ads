@@ -15,19 +15,19 @@ public interface AdRewardedVideo {
 
     public interface RewardedVideoListener {
 
-        public void onAdLoaded(AdRewardedVideo adRewardedVideo);
+        public void onAdLoaded();
 
-        public void onAdOpened(AdRewardedVideo adRewardedVideo);
+        public void onAdOpened();
 
-        public void onAdStarted(AdRewardedVideo adRewardedVideo);
+        public void onAdStarted();
 
-        public void onAdClosed(AdRewardedVideo adRewardedVideo);
+        public void onAdClosed();
 
-        public void onRewarded(AdRewardedVideo adRewardedVideo, RewardItem rewardItem);
+        public void onRewarded(RewardItem rewardItem);
 
-        public void onAdLeftApplication(AdRewardedVideo adRewardedVideo);
+        public void onAdLeftApplication();
 
-        public void onAdFailedToLoad(AdRewardedVideo adRewardedVideo, int i);
+        public void onAdFailedToLoad(int i);
     }
 
     public static class RewardItem {

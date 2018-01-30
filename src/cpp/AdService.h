@@ -98,6 +98,7 @@ namespace ludei { namespace ads {
         virtual AdInterstitial * createInterstitial(const char * adunit = 0) = 0;
 
         virtual AdRewardedVideo * createRewardedVideo(const char * adunit = 0) = 0;
+
     };
     
 } }

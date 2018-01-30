@@ -17,15 +17,20 @@ import com.ludei.ads.AdRewardedVideo;
 public class RewardedVideoAdMob extends AbstractAdRewardedVideo implements RewardedVideoAdListener{
 
     private RewardedVideoAd zRewardedVideoAd;
-    private RewardedVideoAdListener zListener;
     private String zAdUnit;
 
     public RewardedVideoAdMob(Context context, String adunit){
 
         zRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
-        zRewardedVideoAd.setRewardedVideoAdListener(this);
 
+        /*
+            As zRewardedVideoAd is a singleton, the existence of 2 or more RewardedVideoAdMob will cause
+            all of the requests to zRewardedVideoAd requests being listened by just the last RewardedVideoAdMob created.
+            That is why we choose for our project to do the re-mapping of the events on AdServiceBridge.
+         */
+        zRewardedVideoAd.setRewardedVideoAdListener(this);
         this.zAdUnit = adunit;
+
 
     }
 
@@ -38,9 +43,6 @@ public class RewardedVideoAdMob extends AbstractAdRewardedVideo implements Rewar
     public void show() {
         if (zRewardedVideoAd.isLoaded()) {
             zRewardedVideoAd.show();
-        }
-        else {
-            loadAd();
         }
     }
 

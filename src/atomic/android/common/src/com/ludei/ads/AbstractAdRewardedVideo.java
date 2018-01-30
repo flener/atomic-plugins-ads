@@ -16,43 +16,43 @@ public abstract class AbstractAdRewardedVideo implements AdRewardedVideo {
 
     public void notifyOnRewardedVideoAdLoaded() {
         if(zListener != null){
-            zListener.onAdLoaded(this);
+            zListener.onAdLoaded();
         }
     }
 
     public void notifyOnRewardedVideoAdOpened() {
         if(zListener != null){
-            zListener.onAdOpened(this);
+            zListener.onAdOpened();
         }
     }
 
     public void notifyOnRewardedVideoStarted() {
         if(zListener != null){
-            zListener.onAdStarted(this);
+            zListener.onAdStarted();
         }
     }
 
     public void notifyOnRewardedVideoAdClosed() {
         if(zListener != null){
-            zListener.onAdClosed(this);
+            zListener.onAdClosed();
         }
     }
 
     public void notifyOnRewarded(RewardItem rewardItem) {
         if(zListener != null){
-            zListener.onRewarded(this, rewardItem);
+            zListener.onRewarded(rewardItem);
         }
     }
 
     public void notifyOnRewardedVideoAdLeftApplication() {
         if(zListener != null){
-            zListener.onAdLeftApplication(this);
+            zListener.onAdLeftApplication();
         }
     }
 
     public void notifyOnRewardedVideoAdFailedToLoad(int i) {
         if(zListener != null){
-            zListener.onAdFailedToLoad(this, i);
+            zListener.onAdFailedToLoad(i);
         }
     }
 

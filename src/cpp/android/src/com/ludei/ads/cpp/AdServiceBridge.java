@@ -2,6 +2,7 @@ package com.ludei.ads.cpp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -19,6 +20,10 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     protected HashMap<Long, BannerData> _banners = new HashMap<>();
     protected HashMap<Long, AdInterstitial> _interstitials = new HashMap<>();
     protected HashMap<Long, AdRewardedVideo> zRewardedVideos = new HashMap<>();
+
+    private String REWARDED_VIDEO_TAG = "RewardedVideoTag";
+    private AdRewardedVideo zRewardedVideoLoading;
+    private AdRewardedVideo zRewardedVideoShowing;
 
     public AdServiceBridge() {
 
@@ -57,7 +62,11 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
             public void run() {
                 AdRewardedVideo rewardedVideo = zRewardedVideos.get(rewardedVideoId);
                 if (rewardedVideo != null) {
-                    rewardedVideo.show();
+                    // Only one rewardedVideo showing is allowed each time
+                    if(zRewardedVideoShowing == null){
+                        zRewardedVideoShowing = rewardedVideo;
+                        rewardedVideo.show();
+                    }
                 }
             }
         });
@@ -69,7 +78,11 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
             public void run() {
                 AdRewardedVideo rewardedVideo = zRewardedVideos.get(rewardedVideoId);
                 if (rewardedVideo != null) {
-                    rewardedVideo.loadAd();
+                    // Only one rewardedVideo loading is allowed each time
+                    if(zRewardedVideoLoading == null){
+                        zRewardedVideoLoading = rewardedVideo;
+                        rewardedVideo.loadAd();
+                    }
                 }
             }
         });
@@ -91,10 +104,16 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     }
 
     @Override
-    public void onAdLoaded(AdRewardedVideo adRewardedVideo) {
-        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+    public void onAdLoaded() {
+        if(zRewardedVideoLoading == null){
+            Log.e(REWARDED_VIDEO_TAG, "There is no video loading while received event AdServiceBridge.onAdLoaded()");
+            return;
+        }
+
+        final long rewardedVideoId = findRewardedVideoId(zRewardedVideoLoading);
         if (rewardedVideoId == 0)
             return;
+        zRewardedVideoLoading = null;
         dispatchNative(new Runnable() {
             @Override
             public void run() {
@@ -104,8 +123,13 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     }
 
     @Override
-    public void onAdOpened(AdRewardedVideo adRewardedVideo) {
-        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+    public void onAdOpened() {
+        if(zRewardedVideoShowing == null){
+            Log.e(REWARDED_VIDEO_TAG, "There is no video showing while received event AdServiceBridge.onAdOpened()");
+            return;
+        }
+
+        final long rewardedVideoId = findRewardedVideoId(zRewardedVideoShowing);
         if (rewardedVideoId == 0)
             return;
         dispatchNative(new Runnable() {
@@ -117,8 +141,13 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     }
 
     @Override
-    public void onAdStarted(AdRewardedVideo adRewardedVideo) {
-        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+    public void onAdStarted() {
+        if(zRewardedVideoShowing == null){
+            Log.e(REWARDED_VIDEO_TAG, "There is no video showing while received event AdServiceBridge.onAdStarted()");
+            return;
+        }
+
+        final long rewardedVideoId = findRewardedVideoId(zRewardedVideoShowing);
         if (rewardedVideoId == 0)
             return;
         dispatchNative(new Runnable() {
@@ -130,10 +159,16 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     }
 
     @Override
-    public void onAdClosed(AdRewardedVideo adRewardedVideo) {
-        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+    public void onAdClosed() {
+        if(zRewardedVideoShowing == null){
+            Log.e(REWARDED_VIDEO_TAG, "There is no video showing while received event AdServiceBridge.onAdClosed()");
+            return;
+        }
+
+        final long rewardedVideoId = findRewardedVideoId(zRewardedVideoShowing);
         if (rewardedVideoId == 0)
             return;
+        zRewardedVideoShowing = null;
         dispatchNative(new Runnable() {
             @Override
             public void run() {
@@ -143,8 +178,13 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     }
 
     @Override
-    public void onRewarded(AdRewardedVideo adRewardedVideo, final AdRewardedVideo.RewardItem rewardItem) {
-        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+    public void onRewarded(final AdRewardedVideo.RewardItem rewardItem) {
+        if(zRewardedVideoShowing == null){
+            Log.e(REWARDED_VIDEO_TAG, "There is no video showing while received event AdServiceBridge.onRewarded()");
+            return;
+        }
+
+        final long rewardedVideoId = findRewardedVideoId(zRewardedVideoShowing);
         if (rewardedVideoId == 0)
             return;
         dispatchNative(new Runnable() {
@@ -156,8 +196,13 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     }
 
     @Override
-    public void onAdLeftApplication(AdRewardedVideo adRewardedVideo) {
-        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+    public void onAdLeftApplication() {
+        if(zRewardedVideoShowing == null){
+            Log.e(REWARDED_VIDEO_TAG, "There is no video showing while received event AdServiceBridge.onAdLeftApplication()");
+            return;
+        }
+
+        final long rewardedVideoId = findRewardedVideoId(zRewardedVideoShowing);
         if (rewardedVideoId == 0)
             return;
         dispatchNative(new Runnable() {
@@ -169,10 +214,15 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     }
 
     @Override
-    public void onAdFailedToLoad(AdRewardedVideo adRewardedVideo, final int i) {
-        final long rewardedVideoId = findRewardedVideoId(adRewardedVideo);
+    public void onAdFailedToLoad(final int i) {
+        if(zRewardedVideoLoading == null){
+            return;
+        }
+
+        final long rewardedVideoId = findRewardedVideoId(zRewardedVideoLoading);
         if (rewardedVideoId == 0)
             return;
+        zRewardedVideoLoading = null;
         dispatchNative(new Runnable() {
             @Override
             public void run() {
