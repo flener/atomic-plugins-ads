@@ -65,7 +65,10 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
                     // Only one rewardedVideo showing is allowed each time
                     if(zRewardedVideoShowing == null){
                         zRewardedVideoShowing = rewardedVideo;
-                        rewardedVideo.show();
+                        boolean successOnShowing = rewardedVideo.show();
+                        if(!successOnShowing){
+                            zRewardedVideoShowing = null;
+                        }
                     }
                 }
             }

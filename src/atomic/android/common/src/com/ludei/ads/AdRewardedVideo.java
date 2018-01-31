@@ -9,7 +9,7 @@ public interface AdRewardedVideo {
 
     void loadAd();
 
-    void show();
+    boolean show();
 
     void destroy();
 

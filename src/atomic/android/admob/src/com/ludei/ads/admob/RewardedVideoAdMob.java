@@ -4,7 +4,10 @@ package com.ludei.ads.admob;
  * Created by fabio on 24/01/18.
  */
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
@@ -31,7 +34,6 @@ public class RewardedVideoAdMob extends AbstractAdRewardedVideo implements Rewar
         zRewardedVideoAd.setRewardedVideoAdListener(this);
         this.zAdUnit = adunit;
 
-
     }
 
     @Override
@@ -40,9 +42,13 @@ public class RewardedVideoAdMob extends AbstractAdRewardedVideo implements Rewar
     }
 
     @Override
-    public void show() {
+    public boolean show() {
         if (zRewardedVideoAd.isLoaded()) {
             zRewardedVideoAd.show();
+            return true;
+        }else{
+            Log.e("RewardedVideoTag", "Tried to show video that is not loaded yet.");
+            return false;
         }
     }
 
