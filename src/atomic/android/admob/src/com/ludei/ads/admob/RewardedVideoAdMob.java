@@ -94,4 +94,9 @@ public class RewardedVideoAdMob extends AbstractAdRewardedVideo implements Rewar
         notifyOnRewardedVideoAdFailedToLoad(i);
     }
 
+    @Override
+    public void onRewardedVideoCompleted() {
+        //TODO admob api added this method but we don't use, implement in the future.
+    }
+
 }
