@@ -247,7 +247,11 @@ public class AdServiceBridge implements AdBanner.BannerListener, AdInterstitial.
     }
 
     protected void runOnThread(Runnable runnable) {
-        _activity.runOnUiThread(runnable);
+        if(_activity != null) {
+            _activity.runOnUiThread(runnable);
+        }else{
+            Log.e(REWARDED_VIDEO_TAG,"Failed to run in UI thread because activity is null");
+        }
     }
 
     protected void dispatchNative(Runnable runnable) {
