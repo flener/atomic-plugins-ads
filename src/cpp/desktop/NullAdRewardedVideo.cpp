@@ -17,6 +17,13 @@ void NullAdRewardedVideo::show()
 {
 	std::cout << "NullAdRewardedVideo(adunit="<< mAdUnit << "::show()" << std::endl;
 
+	static int count = 0;
+	count++;
+	// Adds 50% of fail so that we can test and handle this possibility of failure.
+	if(count % 2 != 0){
+		JLOGDEBUG("Failing to showAd on purpose. The code must be robust to this possibility.");
+		return;
+	}
 
 	if(mListener){
 		mListener->onAdOpened(this);
