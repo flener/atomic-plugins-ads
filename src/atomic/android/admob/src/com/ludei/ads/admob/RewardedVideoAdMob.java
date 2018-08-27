@@ -38,7 +38,14 @@ public class RewardedVideoAdMob extends AbstractAdRewardedVideo implements Rewar
 
     @Override
     public void loadAd() {
-        zRewardedVideoAd.loadAd(zAdUnit, new AdRequest.Builder().addTestDevice("8F478BBA820B81CFBCF9640367497375").addTestDevice("D659633CBE66EA5904F769B6FF521404").build());
+        if (!zRewardedVideoAd.isLoaded()) {
+            zRewardedVideoAd.loadAd(zAdUnit, new AdRequest.Builder()
+					.addTestDevice("8F478BBA820B81CFBCF9640367497375")
+					.addTestDevice("D659633CBE66EA5904F769B6FF521404")
+					.addTestDevice("4613DC97C113CF52E7CFB8A57F339FE6") // Mônica
+					.addTestDevice("42D3EEF8AC38CD16216ADA05E8F9A648") // Isabel
+					.build());
+        }
     }
 
     @Override
