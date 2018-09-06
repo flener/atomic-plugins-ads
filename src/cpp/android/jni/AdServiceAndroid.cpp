@@ -167,7 +167,8 @@ AdInterstitial * AdServiceAndroid::createInterstitial(const char * adunit)
 AdRewardedVideo * AdServiceAndroid::createRewardedVideo(const char * adunit)
 {
    AdRewardedVideoAndroid * rewardedVideo = new AdRewardedVideoAndroid(javaObject);
-   javaObject->call("createRewardedVideo", rewardedVideo, adunit);
+    long long rewardedVideoLong = (long long)rewardedVideo;
+   javaObject->call("createRewardedVideo", rewardedVideoLong, adunit);
    return rewardedVideo;
 }
 
@@ -206,7 +207,7 @@ AdService * AdService::create(AdProvider provider)
 
 extern "C"
 {
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeBannerOnLoaded(JNIEnv * env, jlong pointer, jint width, jint height)
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeBannerOnLoaded(JNIEnv * env, jclass, jlong pointer, jint width, jint height)
     {
         AdBannerAndroid * banner = reinterpret_cast<AdBannerAndroid*>(pointer);
         banner->width = width;
@@ -216,7 +217,7 @@ extern "C"
         }
     }
 
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeBannerOnFailed(JNIEnv * env, jlong pointer, jint code, jstring message)
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeBannerOnFailed(JNIEnv * env, jclass, jlong pointer, jint code, jstring message)
     {
         AdBannerAndroid * banner = reinterpret_cast<AdBannerAndroid*>(pointer);
         if (banner->listener) {
@@ -224,7 +225,7 @@ extern "C"
         }
     }
 
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeBannerOnClicked(JNIEnv * env, jlong pointer)
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeBannerOnClicked(JNIEnv * env, jclass, jlong pointer)
     {
         AdBannerAndroid * banner = reinterpret_cast<AdBannerAndroid*>(pointer);
         if (banner->listener) {
@@ -232,7 +233,7 @@ extern "C"
         }
     }
 
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeBannerOnExpanded(JNIEnv * env, jlong pointer)
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeBannerOnExpanded(JNIEnv * env, jclass, jlong pointer)
     {
         AdBannerAndroid * banner = reinterpret_cast<AdBannerAndroid*>(pointer);
         if (banner->listener) {
@@ -240,7 +241,7 @@ extern "C"
         }
     }
 
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeBannerOnCollapsed(JNIEnv * env, jlong pointer)
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeBannerOnCollapsed(JNIEnv * env, jclass, jlong pointer)
     {
         AdBannerAndroid * banner = reinterpret_cast<AdBannerAndroid*>(pointer);
         if (banner->listener) {
@@ -248,7 +249,7 @@ extern "C"
         }
     }
 
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeInterstitialOnLoaded(JNIEnv * env, jlong pointer)
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeInterstitialOnLoaded(JNIEnv * env, jclass, jlong pointer)
     {
         AdInterstitialAndroid * interstitial = reinterpret_cast<AdInterstitialAndroid*>(pointer);
         if (interstitial->listener) {
@@ -256,7 +257,7 @@ extern "C"
         }
     }
 
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeInterstitialOnFailed(JNIEnv * env, jlong pointer, jint code, jstring message)
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeInterstitialOnFailed(JNIEnv * env, jclass, jlong pointer, jint code, jstring message)
     {
         AdInterstitialAndroid * interstitial = reinterpret_cast<AdInterstitialAndroid*>(pointer);
         if (interstitial->listener) {
@@ -264,7 +265,7 @@ extern "C"
         }
     }
 
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeInterstitialOnClicked(JNIEnv * env, jlong pointer)
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeInterstitialOnClicked(JNIEnv * env, jclass, jlong pointer)
     {
         AdInterstitialAndroid * interstitial = reinterpret_cast<AdInterstitialAndroid*>(pointer);
         if (interstitial->listener) {
@@ -272,7 +273,7 @@ extern "C"
         }
     }
 
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeInterstitialOnShown(JNIEnv * env, jlong pointer)
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeInterstitialOnShown(JNIEnv * env, jclass, jlong pointer)
     {
         AdInterstitialAndroid * interstitial = reinterpret_cast<AdInterstitialAndroid*>(pointer);
         if (interstitial->listener) {
@@ -280,7 +281,7 @@ extern "C"
         }
     }
 
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeInterstitialOnDismissed(JNIEnv * env, jlong pointer)
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeInterstitialOnDismissed(JNIEnv * env, jclass, jlong pointer)
     {
         AdInterstitialAndroid * interstitial = reinterpret_cast<AdInterstitialAndroid*>(pointer);
         if (interstitial->listener) {
@@ -289,43 +290,43 @@ extern "C"
     }
 
 	// Rewarded Video
-	void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdLoaded(JNIEnv * env, jlong pointer){
+	void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdLoaded(JNIEnv * env, jclass, jlong pointer){
 		AdRewardedVideoAndroid * rewardedVideo = reinterpret_cast<AdRewardedVideoAndroid*>(pointer);
 		if(rewardedVideo->listener){
-			rewardedVideo->listener->onAdLoaded(rewardedVideo);
+            rewardedVideo->listener->onAdLoaded(rewardedVideo);
 		}
 	}
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdOpened(JNIEnv * env, jlong pointer){
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdOpened(JNIEnv * env, jclass, jlong pointer){
 		AdRewardedVideoAndroid * rewardedVideo = reinterpret_cast<AdRewardedVideoAndroid*>(pointer);
 		if(rewardedVideo->listener){
 			rewardedVideo->listener->onAdOpened(rewardedVideo);
 		}
 	}
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdStarted(JNIEnv * env, jlong pointer){
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdStarted(JNIEnv * env, jclass, jlong pointer){
 		AdRewardedVideoAndroid * rewardedVideo = reinterpret_cast<AdRewardedVideoAndroid*>(pointer);
 		if(rewardedVideo->listener){
 			rewardedVideo->listener->onAdStarted(rewardedVideo);
 		}
 	}
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdClosed(JNIEnv * env, jlong pointer){
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdClosed(JNIEnv * env, jclass, jlong pointer){
 		AdRewardedVideoAndroid * rewardedVideo = reinterpret_cast<AdRewardedVideoAndroid*>(pointer);
 		if(rewardedVideo->listener){
 			rewardedVideo->listener->onAdClosed(rewardedVideo);
 		}
 	}
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnRewarded(JNIEnv * env, jlong pointer, jstring rewardType, jint rewardAmount){
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnRewarded(JNIEnv * env, jclass, jlong pointer, jstring rewardType, jint rewardAmount){
 		AdRewardedVideoAndroid * rewardedVideo = reinterpret_cast<AdRewardedVideoAndroid*>(pointer);
 		if(rewardedVideo->listener){
 			rewardedVideo->listener->onRewarded(rewardedVideo, Utils::toString(rewardType), rewardAmount);
 		}
 	}
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdLeftApplication(JNIEnv * env, jlong pointer){
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdLeftApplication(JNIEnv * env, jclass, jlong pointer){
 		AdRewardedVideoAndroid * rewardedVideo = reinterpret_cast<AdRewardedVideoAndroid*>(pointer);
 		if(rewardedVideo->listener){
 			rewardedVideo->listener->onAdLeftApplication(rewardedVideo);
 		}
 	}
-    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdFailedToLoad(JNIEnv * env, jlong pointer, jint i){
+    void Java_com_ludei_ads_cpp_AdServiceBridge_nativeRewardedVideoOnAdFailedToLoad(JNIEnv * env, jclass, jlong pointer, jint i){
 		AdRewardedVideoAndroid * rewardedVideo = reinterpret_cast<AdRewardedVideoAndroid*>(pointer);
 		if(rewardedVideo->listener){
 			rewardedVideo->listener->onAdFailedToLoad(rewardedVideo, i);

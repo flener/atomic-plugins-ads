@@ -63,7 +63,7 @@ namespace ludei { namespace ads {
         void load() override;
         void setListener(AdRewardedVideoListener * listener) override;
 
-        AdRewardedVideoListener * listener;
         SPJNIObject javaObject;
+        AdRewardedVideoListener * listener;
     };
 } }
