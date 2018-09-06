@@ -10,8 +10,8 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 21
@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    compile project(':ads-common')
+    implementation project(':ads-common')
     //compile 'com.google.android.gms:play-services-ads:10.2.6' //admob
-    compile 'com.google.android.gms:play-services-ads:15.0.1' //admob farruda
+    implementation 'com.google.android.gms:play-services-ads:15.0.1' //admob farruda
 }
