@@ -167,7 +167,7 @@ AdInterstitial * AdServiceAndroid::createInterstitial(const char * adunit)
 AdRewardedVideo * AdServiceAndroid::createRewardedVideo(const char * adunit)
 {
    AdRewardedVideoAndroid * rewardedVideo = new AdRewardedVideoAndroid(javaObject);
-    long long rewardedVideoLong = (long long)rewardedVideo;
+   int64_t rewardedVideoLong = (int64_t)rewardedVideo;
    javaObject->call("createRewardedVideo", rewardedVideoLong, adunit);
    return rewardedVideo;
 }
